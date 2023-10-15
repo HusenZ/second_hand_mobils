@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:second_hand_mobils/constants/global_variables.dart';
 import 'package:second_hand_mobils/widgets/custom_text_field.dart';
@@ -41,6 +40,7 @@ class _AuthScreenState extends State<AuthScreen> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 'Welcome',
@@ -72,7 +72,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   padding: const EdgeInsets.all(8.0),
                   color: GlobalVariables.backgroundColor,
                   child: Form(
-                    key: _singInFormKey,
+                    key: _singUpFormKey,
                     child: Column(
                       children: [
                         CustomTextField(
@@ -115,6 +115,29 @@ class _AuthScreenState extends State<AuthScreen> {
                   },
                 ),
               ),
+              if (_auth == Auth.signIn)
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  color: GlobalVariables.backgroundColor,
+                  child: Form(
+                    key: _singInFormKey,
+                    child: Column(
+                      children: [
+                        CustomTextField(
+                          controller: _emailController,
+                          hintText: 'Email',
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        CustomTextField(
+                          controller: _passwordController,
+                          hintText: 'Password',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
             ],
           ),
         ),
