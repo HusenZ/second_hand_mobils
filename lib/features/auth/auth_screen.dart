@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:second_hand_mobils/constants/global_variables.dart';
+import 'package:second_hand_mobils/widgets/custom_button.dart';
 import 'package:second_hand_mobils/widgets/custom_text_field.dart';
 
 enum Auth {
@@ -50,6 +51,9 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
               ),
               ListTile(
+                tileColor: _auth == Auth.signUp
+                    ? GlobalVariables.backgroundColor
+                    : GlobalVariables.greyBackgroundCOlor,
                 title: const Text(
                   'Create Account',
                   style: TextStyle(
@@ -93,11 +97,21 @@ class _AuthScreenState extends State<AuthScreen> {
                           controller: _passwordController,
                           hintText: 'Password',
                         ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        CustomButton(
+                          onPressed: () {},
+                          text: 'Sign Up',
+                        ),
                       ],
                     ),
                   ),
                 ),
               ListTile(
+                tileColor: _auth == Auth.signIn
+                    ? GlobalVariables.backgroundColor
+                    : GlobalVariables.greyBackgroundCOlor,
                 title: const Text(
                   'Sign-In.',
                   style: TextStyle(
@@ -133,6 +147,10 @@ class _AuthScreenState extends State<AuthScreen> {
                         CustomTextField(
                           controller: _passwordController,
                           hintText: 'Password',
+                        ),
+                        CustomButton(
+                          onPressed: () {},
+                          text: 'Sign In',
                         ),
                       ],
                     ),
