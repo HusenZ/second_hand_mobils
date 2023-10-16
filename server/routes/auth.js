@@ -8,20 +8,30 @@ const authRouter = express.Router();
 authRouter.post('/api/signup', async (req, res) => {
     try {
         const { name, email, password } = req.body;
-
-        const existUser = await User.findOne({ email });
-        if (existUser) {
+        
+        const existingUser = await User.findOne({ email })
+        .then(user => {
+            if (user) {
+              console.log(user);
+            } else {
+              console.log('User not found.');
+            }
+          })
+          .catch(error => {
+            console.error(error);
+          });
+        if (existingUser) {
             return res.status(409).json({ error: "User with the same email already exists!" });
         }
 
-        const user = new User({
+        let user = new User({
             email,
             password,
             name,
         });
 
-        await user.save();
-        res.status(200).json(user); // Use 201 for resource creation
+        user = await user.save();
+        res.json(user); // Use 201 for resource creation
     } catch (e) {
         res.status(500).json({ error: e.message });
     }

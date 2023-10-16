@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(authRouter);
 
 //connections
-mongoose.connect(DB).then(()=>{
+mongoose.connect(DB, { useNewUrlParser: true, useUnifiedTopology: true }).then(()=>{
     console.log('connection successful with MongoDB');
 }).catch((e)=>{
     console.log(e);

@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart' show immutable;
 @immutable
 class AuthState {}
 
+class InitialState extends AuthState {}
+
 class LoginState extends AuthState {
   final String email;
   final String password;
@@ -13,14 +15,14 @@ class LoginState extends AuthState {
   });
 }
 
-class SignUp extends AuthState {
+class SignUpState extends AuthState {
   final String userName;
   final String email;
   final String password;
 
-  SignUp({
+  SignUpState({
     required this.userName,
     required this.email,
     required this.password,
-  })
+  });
 }
