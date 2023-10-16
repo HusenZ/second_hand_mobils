@@ -8,7 +8,7 @@ import 'package:second_hand_mobils/features/auth/auth_screen.dart';
 void main() {
   runApp(
     MaterialApp(
-      title: 'Amazon Clone',
+      title: 'R G communication',
       theme: ThemeData(
         scaffoldBackgroundColor: GlobalVariables.backgroundColor,
         colorScheme: const ColorScheme.light(
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context)=>AuthBloc(InitialState()),
+      create: (context) => AuthBloc(context: context, InitialState()),
       child: const AuthScreen(),
     );
   }

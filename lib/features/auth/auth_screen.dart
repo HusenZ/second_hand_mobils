@@ -4,6 +4,7 @@ import 'package:second_hand_mobils/bloc/auth_bloc/auth_bloc.dart';
 import 'package:second_hand_mobils/bloc/auth_bloc/auth_event.dart';
 import 'package:second_hand_mobils/bloc/auth_bloc/auth_state.dart';
 import 'package:second_hand_mobils/constants/global_variables.dart';
+import 'package:second_hand_mobils/models/show_snack.dart';
 import 'package:second_hand_mobils/widgets/custom_button.dart';
 import 'package:second_hand_mobils/widgets/custom_text_field.dart';
 
@@ -108,17 +109,24 @@ class _AuthScreenState extends State<AuthScreen> {
                             ),
                             CustomButton(
                               onPressed: () {
-                                final String userName = _nameController.text;
-                                final String email = _emailController.text;
-                                final String password =
-                                    _passwordController.text;
-                                context.read<AuthBloc>().add(
-                                      SignUpEvent(
-                                        userName: userName,
-                                        email: email,
-                                        password: password,
-                                      ),
-                                    );
+                                try {
+                                  if (_singUpFormKey.currentState!.validate()) {
+                                    final String userName =
+                                        _nameController.text;
+                                    final String email = _emailController.text;
+                                    final String password =
+                                        _passwordController.text;
+                                    context.read<AuthBloc>().add(
+                                          SignUpEvent(
+                                            userName: userName,
+                                            email: email,
+                                            password: password,
+                                          ),
+                                        );
+                                  }
+                                } catch (e) {
+                                  showSnackBar(context, e.toString());
+                                }
                               },
                               text: 'Sign Up',
                             ),
