@@ -30,6 +30,8 @@ class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
 
+  bool isLoading = false;
+
   @override
   void dispose() {
     super.dispose();
@@ -107,29 +109,40 @@ class _AuthScreenState extends State<AuthScreen> {
                             const SizedBox(
                               height: 10,
                             ),
-                            CustomButton(
-                              onPressed: () {
-                                try {
-                                  if (_singUpFormKey.currentState!.validate()) {
-                                    final String userName =
-                                        _nameController.text;
-                                    final String email = _emailController.text;
-                                    final String password =
-                                        _passwordController.text;
-                                    context.read<AuthBloc>().add(
-                                          SignUpEvent(
-                                            userName: userName,
-                                            email: email,
-                                            password: password,
-                                          ),
-                                        );
+                            if (isLoading == true)
+                              const CircularProgressIndicator(),
+                            if (isLoading == false)
+                              CustomButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isLoading = true;
+                                  });
+                                  try {
+                                    if (_singUpFormKey.currentState!
+                                        .validate()) {
+                                      final String userName =
+                                          _nameController.text;
+                                      final String email =
+                                          _emailController.text;
+                                      final String password =
+                                          _passwordController.text;
+                                      context.read<AuthBloc>().add(
+                                            SignUpEvent(
+                                              userName: userName,
+                                              email: email,
+                                              password: password,
+                                            ),
+                                          );
+                                    }
+                                  } catch (e) {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                    showSnackBar(context, e.toString());
                                   }
-                                } catch (e) {
-                                  showSnackBar(context, e.toString());
-                                }
-                              },
-                              text: 'Sign Up',
-                            ),
+                                },
+                                text: 'Sign Up',
+                              ),
                           ],
                         ),
                       ),
@@ -174,10 +187,42 @@ class _AuthScreenState extends State<AuthScreen> {
                               controller: _passwordController,
                               hintText: 'Password',
                             ),
-                            CustomButton(
-                              onPressed: () {},
-                              text: 'Sign In',
+                            const SizedBox(
+                              height: 10,
                             ),
+                            if (isLoading == true)
+                              const CircularProgressIndicator(),
+                            if (isLoading == false)
+                              CustomButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isLoading = true;
+                                  });
+                                  try {
+                                    if (_singInFormKey.currentState!
+                                        .validate()) {
+                                      final String email =
+                                          _emailController.text;
+                                      final String password =
+                                          _passwordController.text;
+                                      // ignore: use_build_context_synchronously
+                                      context.read<AuthBloc>().add(
+                                            SignInEvent(
+                                              email: email,
+                                              password: password,
+                                            ),
+                                          );
+                                    }
+                                  } catch (e) {
+                                    // ignore: use_build_context_synchronously
+                                    showSnackBar(context, e.toString());
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                  }
+                                },
+                                text: 'Sign In',
+                              ),
                           ],
                         ),
                       ),

@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:second_hand_mobils/bloc/auth_bloc/auth_bloc.dart';
 import 'package:second_hand_mobils/bloc/auth_bloc/auth_state.dart';
 import 'package:second_hand_mobils/constants/global_variables.dart';
-import 'package:second_hand_mobils/features/auth/auth_screen.dart';
+import 'package:second_hand_mobils/screens/auth_screen.dart';
+import 'package:second_hand_mobils/screens/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
   runApp(
     MaterialApp(
       title: 'R G communication',
@@ -25,13 +27,44 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthBloc(context: context, InitialState()),
-      child: const AuthScreen(),
+    Future<AuthState> checkAuthentication() async {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('x-auth-token');
+
+      if (token != null) {
+        return AuthenticatedState(userId: token);
+      } else {
+        return InitialState();
+      }
+    }
+
+    return FutureBuilder(
+      future: checkAuthentication(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          final initialState = snapshot.data as AuthState;
+
+          return BlocProvider<AuthBloc>(
+            create: (context) => AuthBloc(context: context, initialState),
+            child: BlocBuilder<AuthBloc, AuthState>(
+              builder: (context, state) {
+                if (state is AuthenticatedState ||
+                    state is LoadHomeScreenState) {
+                  return const HomeScreen();
+                } else {
+                  return const AuthScreen();
+                }
+              },
+            ),
+          );
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
     );
   }
 }

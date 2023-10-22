@@ -7,19 +7,6 @@ abstract class AuthEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class LoginEvent extends AuthEvent {
-  final String email;
-  final String password;
-
-  LoginEvent({
-    required this.email,
-    required this.password,
-  });
-
-  @override
-  List<Object?> get props => [email, password];
-}
-
 class SignUpEvent extends AuthEvent {
   final String userName;
   final String email;
@@ -35,4 +22,32 @@ class SignUpEvent extends AuthEvent {
   List<Object?> get props => [userName, email, password];
 }
 
-class LoadHomeScreenEvent extends AuthEvent {}
+class SignInEvent extends AuthEvent {
+  final String email;
+  final String password;
+
+  SignInEvent({
+    required this.email,
+    required this.password,
+  });
+
+  @override
+  List<Object?> get props => [email, password];
+}
+
+class AuthenticatedEvent extends AuthEvent {
+  final String userId; // Include any user-specific information here
+
+  AuthenticatedEvent({
+    required this.userId,
+  });
+  @override
+  List<Object?> get props => [userId];
+}
+
+class LoadHomeScreenEvent extends AuthEvent {
+  final bool token;
+  LoadHomeScreenEvent(this.token);
+  @override
+  List<Object?> get props => [token];
+}
