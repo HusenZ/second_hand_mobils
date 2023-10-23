@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:second_hand_mobils/constants/global_variables.dart';
+import 'package:second_hand_mobils/widgets/display_product.dart';
+import 'package:second_hand_mobils/widgets/search_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -8,48 +11,36 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
-
-  final List<Widget> _widgetOptions = <Widget>[
-    // Define the widgets for each tab
-    // You can replace these with your own content
-    const Text('Home Content'),
-    const Text('Search Content'),
-    const Text('Profile Content'),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Screen'),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60),
+        child: AppBar(
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: GlobalVariables.appBarGradient,
+            ),
+          ),
+          title: const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: SearchActionField(),
+              )
+            ],
+          ),
+        ),
       ),
-      body: Center(
-        child: _widgetOptions[_selectedIndex],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return InkWell(
+            child: DisplayProduct(product: products[index]),
+            onTap: () {},
+          );
+        },
+        itemCount: products.length,
+        scrollDirection: Axis.vertical,
       ),
     );
   }

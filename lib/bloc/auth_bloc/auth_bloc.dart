@@ -5,7 +5,7 @@ import 'package:second_hand_mobils/bloc/auth_bloc/auth_event.dart';
 import 'package:second_hand_mobils/bloc/auth_bloc/auth_state.dart';
 import 'package:bloc/bloc.dart';
 import 'package:second_hand_mobils/models/show_snack.dart';
-import 'package:second_hand_mobils/screens/home_screen.dart';
+import 'package:second_hand_mobils/screens/screens.dart';
 import 'package:second_hand_mobils/services/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -71,8 +71,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final token = await authService.getToken(); //Retrieve the token
       if (token != null) {
         // ignore: use_build_context_synchronously
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const Screens()));
         emit(LoadHomeScreenState(token: event.token));
       } else {
         // ignore: use_build_context_synchronously

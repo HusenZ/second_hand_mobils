@@ -163,6 +163,9 @@ class _AuthScreenState extends State<AuthScreen> {
                       groupValue: _auth,
                       onChanged: (Auth? val) {
                         setState(() {
+                          isLoading = false;
+                        });
+                        setState(() {
                           _auth = val!;
                         });
                       },

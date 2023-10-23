@@ -4,7 +4,7 @@ import 'package:second_hand_mobils/bloc/auth_bloc/auth_bloc.dart';
 import 'package:second_hand_mobils/bloc/auth_bloc/auth_state.dart';
 import 'package:second_hand_mobils/constants/global_variables.dart';
 import 'package:second_hand_mobils/screens/auth_screen.dart';
-import 'package:second_hand_mobils/screens/home_screen.dart';
+import 'package:second_hand_mobils/screens/screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
               builder: (context, state) {
                 if (state is AuthenticatedState ||
                     state is LoadHomeScreenState) {
-                  return const HomeScreen();
+                  return const Screens();
                 } else {
                   return const AuthScreen();
                 }
