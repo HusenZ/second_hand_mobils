@@ -6,6 +6,7 @@ import 'package:second_hand_mobils/constants/global_variables.dart' show uri;
 import 'package:second_hand_mobils/models/show_snack.dart';
 import 'package:second_hand_mobils/models/user_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:second_hand_mobils/screens/auth_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
@@ -75,7 +76,6 @@ class AuthService {
   Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('x-auth-token');
-    print('Retrieved Token: $token');
     return token;
   }
 
@@ -83,6 +83,21 @@ class AuthService {
   Future<void> setToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('x-auth-token', token);
-    print('Stored Token: $token');
+  }
+
+  //log out feature
+  void logOut(BuildContext context) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('x-auth-token', '');
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const AuthScreen(),
+          ),
+          (route) => false);
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      showSnackBar(context, e.toString());
+    }
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:second_hand_mobils/bloc/auth_bloc/auth_bloc.dart';
-import 'package:second_hand_mobils/bloc/auth_bloc/auth_event.dart';
-import 'package:second_hand_mobils/bloc/auth_bloc/auth_state.dart';
+import 'package:second_hand_mobils/bloc/app_bloc/app_bloc.dart';
+import 'package:second_hand_mobils/bloc/app_bloc/app_event.dart';
+import 'package:second_hand_mobils/bloc/app_bloc/app_state.dart';
 import 'package:second_hand_mobils/constants/global_variables.dart';
 import 'package:second_hand_mobils/models/show_snack.dart';
 import 'package:second_hand_mobils/widgets/custom_button.dart';
@@ -44,7 +44,7 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: GlobalVariables.greyBackgroundCOlor,
-        body: BlocConsumer<AuthBloc, AuthState>(
+        body: BlocConsumer<AppBloc, AppState>(
           listener: (context, appState) {},
           builder: (context, state) => SafeArea(
             child: Padding(
@@ -126,7 +126,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                           _emailController.text;
                                       final String password =
                                           _passwordController.text;
-                                      context.read<AuthBloc>().add(
+                                      context.read<AppBloc>().add(
                                             SignUpEvent(
                                               userName: userName,
                                               email: email,
@@ -209,7 +209,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                       final String password =
                                           _passwordController.text;
                                       // ignore: use_build_context_synchronously
-                                      context.read<AuthBloc>().add(
+                                      context.read<AppBloc>().add(
                                             SignInEvent(
                                               email: email,
                                               password: password,

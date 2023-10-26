@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:second_hand_mobils/models/product_model.dart';
 
-String uri = 'http://192.168.224.107:3000';
+String uri = 'http://<your ip address>:3000';
 
 class GlobalVariables {
   // COLORS
